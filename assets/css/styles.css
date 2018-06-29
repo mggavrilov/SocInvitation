@@ -1,0 +1,138 @@
+html {
+	height: 95%;
+}
+
+body {
+	margin: 20px 300px;
+	font-family: Arial, Helvetica, sans-serif;
+	background-image: url('../img/background.jpg');
+	background-repeat: repeat;
+	height: 95%;
+}
+
+.content {
+	background-color: lightgrey;
+	padding: 20px 50px;
+	min-height: 100%;
+	border-radius: 10px;
+}
+
+.top {
+	margin: auto;
+	width: 50%;
+}
+
+.logo {
+	height: 100px;
+	vertical-align: middle;
+}
+
+.sitetitle {
+	font-size: 60px;
+	vertical-align: middle;
+	font-family: Courier, Monaco, monospace;
+	color: black;
+}
+
+a {
+	text-decoration: none;
+}
+
+nav {
+	margin: auto;
+	width: 50%;
+	text-align: center;
+	padding: 20px 0px;
+}
+
+nav a {
+	padding: 10px 15px;
+	font-size: 20px;
+	color: midnightblue;
+	font-weight: bold;
+	transition: background-color 500ms;
+	border-radius: 10px;
+}
+
+nav a:hover {
+	background-color: darkgrey;
+}
+
+.error, .success {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+	padding: 20px;
+}
+
+.error {
+	background-color: orangered;
+}
+
+.success {
+	background-color: limegreen;
+}
+
+.page {
+	padding-top: 30px;
+}
+
+form {
+	width: 50%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.filearea {
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+input[type=file] {
+	width: 30%;
+	margin: 0 auto;
+	display: block;
+	padding-bottom: 20px;
+}
+
+input[type=text], input[type=password] {
+	padding: 10px;
+	border-radius: 10px;
+	width: 40%;
+	margin: auto;
+	margin-bottom: 20px;
+}
+
+form input {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+label {
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.button {
+	cursor: pointer;
+	margin: auto;
+	width: 20%;
+	background-color: midnightblue;
+    border-radius: 10px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.text {
+	margin: auto;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+}

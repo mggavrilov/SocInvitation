@@ -16,7 +16,7 @@
 		}
 		
 		public function getAllSettings() {
-			$stmt = $this->conn->prepare("SELECT * FROM settings");
+			$stmt = $this->conn->prepare("SELECT * FROM settings WHERE readonly = 0");
             $stmt->execute();
 			
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
