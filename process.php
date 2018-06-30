@@ -11,11 +11,11 @@
 	require_once('models/Facebook_model.php');
 	require_once('models/Setting_model.php');
 	require_once('models/Student_model.php');
-	
-	//Check if there's a valid FB user token
+
 	$facebookModel = new Facebook_model();
 	$fb = $facebookModel->getFacebookObject();
-	
+		
+	//Check if there's a valid FB user token
 	if(!$facebookModel->isFacebookTokenValid()) {
 		$helper = $fb->getRedirectLoginHelper();
 		 
@@ -53,7 +53,7 @@
 		if(isset($_FILES['directory'])) {
 			$folderInvitations = array();
 		
-			//get data from selected folder
+			//Get data from selected folder
 			foreach($_FILES['directory']['name'] as $invitationName) {
 				$folderInvitations[$invitationName] = true;
 			}
@@ -202,45 +202,43 @@
 					}
 				}
 			}
-		}
 		
-		//Auto generate invitations
-		if($generateInvites) {
-			foreach($students as $fn => $student) {
-				if(!isset($fbInvitations[$fn]) && !isset($fbInvitationsGenerated[$fn])) {
-					//If the student hasn't uploaded an invitation until midnight before their presentation time, generate an invite
-					$midnight = date("Y-m-d 00:00:00", strtotime($student['presentation_time']));
-					
-					if(time() >= strtotime($midnight)) {
-						//Generate invitation, post it to FB and save post to db
-						$post = $facebookModel->generatePost($student);
+			//Auto generate invitations
+			if($generateInvites) {
+				foreach($students as $fn => $student) {
+					if(!isset($fbInvitations[$fn]) && !isset($fbInvitationsGenerated[$fn])) {
+						//If the student hasn't uploaded an invitation until midnight before their presentation time, generate an invite
+						$midnight = date("Y-m-d 00:00:00", strtotime($student['presentation_time']));
 						
-						$postArray = array('id' => explode("_", $post['id'])[1],
-											'created_time' => date("Y-m-d H:i:s", strtotime($post['created_time'])),
-											'message' => $post['message'],
-											'picture' => $post['full_picture'],
-											'likes' => 0,
-											'comments' => 0,
-											'auto_generated' => 1);
-											
-						$fbInvitationsGeneratedNew[$fn] = $postArray;
+						if(time() >= strtotime($midnight)) {
+							//Generate invitation, post it to FB and save post to db
+							$post = $facebookModel->generatePost($student);
+							
+							$postArray = array('id' => explode("_", $post['id'])[1],
+												'created_time' => date("Y-m-d H:i:s", strtotime($post['created_time'])),
+												'message' => $post['message'],
+												'picture' => $post['full_picture'],
+												'likes' => 0,
+												'comments' => 0,
+												'auto_generated' => 1);
+												
+							$fbInvitationsGeneratedNew[$fn] = $postArray;
+						}
 					}
 				}
 			}
-		}
 		
-		//Delete previous auto generated posts if students uploaded their own invitations
-		foreach($fbInvitationsGenerated as $fn => $post) {
-			if(isset($fbInvitations[$fn])) {
-				//Delete post from FB
-				//This doesn't work; says there were insufficient permissioons provided even if ALL of them are provided; bug report opened
-				$facebookModel->deletePost($post['id']);
-				unset($fbInvitationsGenerated[$fn]);
+			//Delete previous auto generated posts if students uploaded their own invitations
+			foreach($fbInvitationsGenerated as $fn => $post) {
+				if(isset($fbInvitations[$fn])) {
+					//Delete post from FB
+					//This doesn't work; says there were insufficient permissioons provided even if ALL of them are provided; bug report opened
+					$facebookModel->deletePost($post['id']);
+					unset($fbInvitationsGenerated[$fn]);
+				}
 			}
-		}
 		
-		//Save FB posts to database
-		if($scanFB) {
+			//Save FB posts to database
 			//Clear old post information
 			$postModel->truncatePosts();
 			
@@ -263,10 +261,10 @@
 			}
 		}
 		
-		//Scan directory if it was uploaded
-		if(isset($_FILES['directory'])) {
+		//Scan directory if it was uploaded and show results
+		if(isset($_FILES['directory']) && $_FILES['directory']['error'][0] == 0) {
 			$allowedImageExtensions = array('png', 'jpg', 'jpeg');
-			$studentsWithoutInvitations = array();
+			$studentInvitations = array();
 			
 			foreach($students as $fn => $student) {
 				$hasInvitation = false;
@@ -275,20 +273,26 @@
 					$invitationName = $fn . "_invite." . $extension;
 					
 					if(isset($folderInvitations[$invitationName])) {
+						$student['filename'] = $invitationName;
+						$studentInvitations[] = $student;
 						$hasInvitation = true;
 						break;
 					}
 				}
 				
 				if(!$hasInvitation) {
-					$studentsWithoutInvitations[] = $student;
+					$studentInvitations[] = $student;
 				}
 			}
 			
-			/*********TO DO************/
-			//show students without invitations in a table and offer to go back to processing or to ranking
+			require_once('views/FolderInvitations.php');
 			exit;
 		}
+		
+		$_SESSION['notification']['message'] = "Сканирането беше успешно!";
+		$_SESSION['notification']['type'] = "success";
+		header("Location: process.php");
+		exit;
 	}
 	
 	require_once('views/Process.php');

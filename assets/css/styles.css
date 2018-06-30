@@ -63,6 +63,7 @@ nav a:hover {
 	font-weight: bold;
 	font-size: 18px;
 	padding: 20px;
+	border-radius: 10px;
 }
 
 .error {
@@ -115,6 +116,7 @@ label {
 	text-align: center;
 	font-weight: bold;
 	margin-bottom: 5px;
+	user-select: none;
 }
 
 .button {
@@ -143,4 +145,18 @@ label {
 
 .invitationimage:hover {
 	transform: scale(10);
+}
+
+.invalidcell {
+	background-color: orangered;
+}
+
+td {
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle !important;
+}
+
+th {
+	text-align: center !important;
 }

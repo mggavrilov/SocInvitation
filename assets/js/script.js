@@ -12,14 +12,14 @@ function hide(el) {
 }
 
 window.onload = setTimeout(function() {
-	var notificationElement = document.getElementById("notification");
-	
-	if(notificationElement != null) {
+	if(!document.getElementById("notification").classList.contains("jsnotif")) {
+		var notificationElement = document.getElementById("notification");
+
 		hide(notificationElement);
 	}
 }, 10000);
 
-window.onload = function() {
+window.onload = function() {	
 	if(document.getElementById("table") != null) {
 		var dataTable = new DataTable("#table");
 	}

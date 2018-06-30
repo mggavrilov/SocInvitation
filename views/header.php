@@ -17,7 +17,7 @@
 	</head>
 	<body>
 		<div class="content">
-			<a href="/index.php">
+			<a href="index.php">
 				<div class="top">
 					<img class="logo" src="assets/img/logo.png">
 					<span class="sitetitle">SocInvitation</span>

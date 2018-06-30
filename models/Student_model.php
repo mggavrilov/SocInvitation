@@ -8,8 +8,8 @@
         }
 		
 		public function updateStudent($data) {
-			$stmt = $this->conn->prepare("UPDATE students SET name = ?, presentation_time = ?, post_id = ? WHERE fn = ?");
-            $stmt->execute(array($data['name'], $data['presentation_time'], $data['post_id'], $data['fn']));
+			$stmt = $this->conn->prepare("UPDATE students SET name = ?, presentation_time = ? WHERE fn = ?");
+            $stmt->execute(array($data['name'], $data['presentation_time'], $data['fn']));
 		}
 		
 		public function updateStudentPost($data) {
@@ -34,7 +34,7 @@
 		public function getStudentRankings() {
 			$stmt = $this->conn->prepare("SELECT fn, name, presentation_time, post_id, created_time,
 										  message, picture, likes, comments, auto_generated
-										  FROM students JOIN posts ON students.post_id = posts.id");
+										  FROM students LEFT JOIN posts ON students.post_id = posts.id");
             $stmt->execute();
 			
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
