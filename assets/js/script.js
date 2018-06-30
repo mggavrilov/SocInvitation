@@ -18,3 +18,9 @@ window.onload = setTimeout(function() {
 		hide(notificationElement);
 	}
 }, 10000);
+
+window.onload = function() {
+	if(document.getElementById("table") != null) {
+		var dataTable = new DataTable("#table");
+	}
+}

@@ -12,6 +12,7 @@
 	
 	$settingModel = new Setting_model();
 	$fb_last_update = $settingModel->getSetting("fb_last_update");
+	$fb_group_id = $settingModel->getSetting("fb_group_id");
 	
 	if(empty($fb_last_update)) {
 		$_SESSION['notification']['message'] = "Класацията не е достъпна преди да бъде сканирана Facebook групата. Моля, първо сканирайте.";
