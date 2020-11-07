@@ -35,6 +35,7 @@ App Domains: localhost
 
 Website Site URL: http://localhost/
 
+
 ## 5. Кратко ръководство на потребителя 
 Login
 
